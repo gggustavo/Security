@@ -1,0 +1,59 @@
+﻿@model Model.Element
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="~/Element"><span class="glyphicon glyphicon-cog"></span> Elementos</a></li>
+        <li class="active">Crear</li>
+    </ul>
+</div>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Aplications_Id, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => x.Aplications_Id, (SelectList)ViewBag.Aplications, new { @class = "form-control" })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.Aplications_Id)
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2 text-right col-md-offset-10">
+            <input type="submit" value="Aceptar" class="btn btn-success" />
+            <a class="btn btn-warning" href="@Url.Action("Index")">Cancelar</a>
+        </div>
+        <div class="row"></div>
+
+    </div>
+}
+
+

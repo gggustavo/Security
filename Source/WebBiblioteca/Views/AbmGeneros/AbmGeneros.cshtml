@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "AbmGeneros";
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#agregar').click(function () {
+                var url = "Alta";
+                window.location.href = url;
+            });
+
+            $('#Modificar').click(function () {
+
+                var url = "Modificacion";
+                window.location.href = url;
+            });
+
+            $('#Baja').click(function () {
+
+                var url = "Baja";
+                window.location.href = url;
+            });
+
+
+        });
+    </script>
+}
+<h2>Gestionar Generos</h2>
+<hr />
+
+<button id="agregar" class="btn btn-sm btn-success">Agregar</button>
+<button id="Modificar" class="btn btn-sm btn-primary">Modificar</button>
+<button id="Baja" class="btn btn-sm btn-danger">Baja</button>
+
+

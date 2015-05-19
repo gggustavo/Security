@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="629aa943bb944673acb3afced1c6a21d" Name="Diagram1">
+        <EntityTypeShape EntityType="SeguridadModel.Aplication" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="SeguridadModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="11.5" />
+        <EntityTypeShape EntityType="SeguridadModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="14.25" />
+        <EntityTypeShape EntityType="SeguridadModel.AspNetUser" Width="1.5" PointX="3" PointY="12.5" />
+        <EntityTypeShape EntityType="SeguridadModel.Element" Width="1.5" PointX="3" PointY="8.75" />
+        <EntityTypeShape EntityType="SeguridadModel.Group" Width="1.5" PointX="3" PointY="2.625" />
+        <EntityTypeShape EntityType="SeguridadModel.Permission" Width="1.5" PointX="5.25" PointY="9" />
+        <EntityTypeShape EntityType="SeguridadModel.Role" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="SeguridadModel.UserDomain" Width="1.5" PointX="5.25" PointY="5.875" />
+        <AssociationConnector Association="SeguridadModel.FK_AplicationGroup" />
+        <AssociationConnector Association="SeguridadModel.FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id" />
+        <AssociationConnector Association="SeguridadModel.FK_dbo_Roles_dbo_Aplications_Aplications_Id" />
+        <AssociationConnector Association="SeguridadModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
+        <AssociationConnector Association="SeguridadModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SeguridadModel.AspNetUserRoles" />
+        <AssociationConnector Association="SeguridadModel.ElementPermission" />
+        <AssociationConnector Association="SeguridadModel.ElementRole" />
+        <AssociationConnector Association="SeguridadModel.RoleGroup" />
+        <AssociationConnector Association="SeguridadModel.UserDomainGroup" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

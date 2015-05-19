@@ -1,0 +1,773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SeguridadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aplications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ElementPermission">
+          <Key>
+            <PropertyRef Name="Element_Id" />
+            <PropertyRef Name="Permissions_Id" />
+          </Key>
+          <Property Name="Element_Id" Type="int" Nullable="false" />
+          <Property Name="Permissions_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ElementRole">
+          <Key>
+            <PropertyRef Name="Element_Id" />
+            <PropertyRef Name="Roles_Id" />
+          </Key>
+          <Property Name="Element_Id" Type="int" Nullable="false" />
+          <Property Name="Roles_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Elements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Aplications_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Aplication_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleGroup">
+          <Key>
+            <PropertyRef Name="Groups_Id" />
+            <PropertyRef Name="Roles_Id" />
+          </Key>
+          <Property Name="Groups_Id" Type="int" Nullable="false" />
+          <Property Name="Roles_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Aplications_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDomainGroup">
+          <Key>
+            <PropertyRef Name="Groups_Id" />
+            <PropertyRef Name="UserDomains_Id" />
+          </Key>
+          <Property Name="Groups_Id" Type="int" Nullable="false" />
+          <Property Name="UserDomains_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDomains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="IsUserAd" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AplicationGroup">
+          <End Role="Aplications" Type="Self.Aplications" Multiplicity="1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aplications">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Aplication_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id">
+          <End Role="Aplications" Type="Self.Aplications" Multiplicity="1" />
+          <End Role="Elements" Type="Self.Elements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aplications">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Elements">
+              <PropertyRef Name="Aplications_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Roles_dbo_Aplications_Aplications_Id">
+          <End Role="Aplications" Type="Self.Aplications" Multiplicity="1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aplications">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="Aplications_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementPermission_Element">
+          <End Role="Elements" Type="Self.Elements" Multiplicity="1" />
+          <End Role="ElementPermission" Type="Self.ElementPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ElementPermission">
+              <PropertyRef Name="Element_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementPermission_Permission">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1" />
+          <End Role="ElementPermission" Type="Self.ElementPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ElementPermission">
+              <PropertyRef Name="Permissions_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementRole_Element">
+          <End Role="Elements" Type="Self.Elements" Multiplicity="1" />
+          <End Role="ElementRole" Type="Self.ElementRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ElementRole">
+              <PropertyRef Name="Element_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementRole_Role">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="ElementRole" Type="Self.ElementRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ElementRole">
+              <PropertyRef Name="Roles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleGroup_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="RoleGroup" Type="Self.RoleGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleGroup">
+              <PropertyRef Name="Groups_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleGroup_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="RoleGroup" Type="Self.RoleGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleGroup">
+              <PropertyRef Name="Roles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDomainGroup_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="UserDomainGroup" Type="Self.UserDomainGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDomainGroup">
+              <PropertyRef Name="Groups_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDomainGroup_UserDomains">
+          <End Role="UserDomains" Type="Self.UserDomains" Multiplicity="1" />
+          <End Role="UserDomainGroup" Type="Self.UserDomainGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDomains">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDomainGroup">
+              <PropertyRef Name="UserDomains_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SeguridadModelStoreContainer">
+          <EntitySet Name="Aplications" EntityType="Self.Aplications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ElementPermission" EntityType="Self.ElementPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ElementRole" EntityType="Self.ElementRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Elements" EntityType="Self.Elements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleGroup" EntityType="Self.RoleGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDomainGroup" EntityType="Self.UserDomainGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDomains" EntityType="Self.UserDomains" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AplicationGroup" Association="Self.FK_AplicationGroup">
+            <End Role="Aplications" EntitySet="Aplications" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="Self.FK_AspNetUserRoles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_Roles" Association="Self.FK_AspNetUserRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id" Association="Self.FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id">
+            <End Role="Aplications" EntitySet="Aplications" />
+            <End Role="Elements" EntitySet="Elements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Roles_dbo_Aplications_Aplications_Id" Association="Self.FK_dbo_Roles_dbo_Aplications_Aplications_Id">
+            <End Role="Aplications" EntitySet="Aplications" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementPermission_Element" Association="Self.FK_ElementPermission_Element">
+            <End Role="Elements" EntitySet="Elements" />
+            <End Role="ElementPermission" EntitySet="ElementPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementPermission_Permission" Association="Self.FK_ElementPermission_Permission">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="ElementPermission" EntitySet="ElementPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementRole_Element" Association="Self.FK_ElementRole_Element">
+            <End Role="Elements" EntitySet="Elements" />
+            <End Role="ElementRole" EntitySet="ElementRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementRole_Role" Association="Self.FK_ElementRole_Role">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="ElementRole" EntitySet="ElementRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleGroup_Groups" Association="Self.FK_RoleGroup_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="RoleGroup" EntitySet="RoleGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleGroup_Roles" Association="Self.FK_RoleGroup_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RoleGroup" EntitySet="RoleGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDomainGroup_Groups" Association="Self.FK_UserDomainGroup_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UserDomainGroup" EntitySet="UserDomainGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDomainGroup_UserDomains" Association="Self.FK_UserDomainGroup_UserDomains">
+            <End Role="UserDomains" EntitySet="UserDomains" />
+            <End Role="UserDomainGroup" EntitySet="UserDomainGroup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SeguridadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SeguridadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aplications" EntityType="SeguridadModel.Aplication" />
+          <EntitySet Name="AspNetUserClaims" EntityType="SeguridadModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="SeguridadModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="SeguridadModel.AspNetUser" />
+          <EntitySet Name="Elements" EntityType="SeguridadModel.Element" />
+          <EntitySet Name="Groups" EntityType="SeguridadModel.Group" />
+          <EntitySet Name="Permissions" EntityType="SeguridadModel.Permission" />
+          <EntitySet Name="Roles" EntityType="SeguridadModel.Role" />
+          <EntitySet Name="UserDomains" EntityType="SeguridadModel.UserDomain" />
+          <AssociationSet Name="FK_AplicationGroup" Association="SeguridadModel.FK_AplicationGroup">
+            <End Role="Aplication" EntitySet="Aplications" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id" Association="SeguridadModel.FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id">
+            <End Role="Aplication" EntitySet="Aplications" />
+            <End Role="Element" EntitySet="Elements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Roles_dbo_Aplications_Aplications_Id" Association="SeguridadModel.FK_dbo_Roles_dbo_Aplications_Aplications_Id">
+            <End Role="Aplication" EntitySet="Aplications" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="SeguridadModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="SeguridadModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="SeguridadModel.AspNetUserRoles">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="ElementPermission" Association="SeguridadModel.ElementPermission">
+            <End Role="Element" EntitySet="Elements" />
+            <End Role="Permission" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="ElementRole" Association="SeguridadModel.ElementRole">
+            <End Role="Element" EntitySet="Elements" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="RoleGroup" Association="SeguridadModel.RoleGroup">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="UserDomainGroup" Association="SeguridadModel.UserDomainGroup">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="UserDomain" EntitySet="UserDomains" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Aplication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Groups" Relationship="SeguridadModel.FK_AplicationGroup" FromRole="Aplication" ToRole="Group" />
+          <NavigationProperty Name="Elements" Relationship="SeguridadModel.FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id" FromRole="Aplication" ToRole="Element" />
+          <NavigationProperty Name="Roles" Relationship="SeguridadModel.FK_dbo_Roles_dbo_Aplications_Aplications_Id" FromRole="Aplication" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="SeguridadModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="SeguridadModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Discriminator" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="SeguridadModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="SeguridadModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="Roles" Relationship="SeguridadModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Element">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Aplications_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Aplication" Relationship="SeguridadModel.FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id" FromRole="Element" ToRole="Aplication" />
+          <NavigationProperty Name="Permissions" Relationship="SeguridadModel.ElementPermission" FromRole="Element" ToRole="Permission" />
+          <NavigationProperty Name="Roles" Relationship="SeguridadModel.ElementRole" FromRole="Element" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Aplication_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Aplication" Relationship="SeguridadModel.FK_AplicationGroup" FromRole="Group" ToRole="Aplication" />
+          <NavigationProperty Name="Roles" Relationship="SeguridadModel.RoleGroup" FromRole="Group" ToRole="Role" />
+          <NavigationProperty Name="UserDomains" Relationship="SeguridadModel.UserDomainGroup" FromRole="Group" ToRole="UserDomain" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Elements" Relationship="SeguridadModel.ElementPermission" FromRole="Permission" ToRole="Element" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Aplications_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Aplication" Relationship="SeguridadModel.FK_dbo_Roles_dbo_Aplications_Aplications_Id" FromRole="Role" ToRole="Aplication" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SeguridadModel.AspNetUserRoles" FromRole="Role" ToRole="AspNetUser" />
+          <NavigationProperty Name="Elements" Relationship="SeguridadModel.ElementRole" FromRole="Role" ToRole="Element" />
+          <NavigationProperty Name="Groups" Relationship="SeguridadModel.RoleGroup" FromRole="Role" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="UserDomain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsUserAd" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="SeguridadModel.UserDomainGroup" FromRole="UserDomain" ToRole="Group" />
+        </EntityType>
+        <Association Name="FK_AplicationGroup">
+          <End Type="SeguridadModel.Aplication" Role="Aplication" Multiplicity="1" />
+          <End Type="SeguridadModel.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aplication">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Aplication_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetObjects_dbo_AspNetAplications_AspNetAplications_Id">
+          <End Type="SeguridadModel.Aplication" Role="Aplication" Multiplicity="1" />
+          <End Type="SeguridadModel.Element" Role="Element" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aplication">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Element">
+              <PropertyRef Name="Aplications_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Roles_dbo_Aplications_Aplications_Id">
+          <End Type="SeguridadModel.Aplication" Role="Aplication" Multiplicity="1" />
+          <End Type="SeguridadModel.Role" Role="Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aplication">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Role">
+              <PropertyRef Name="Aplications_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+          <End Type="SeguridadModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeguridadModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="SeguridadModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SeguridadModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="SeguridadModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="SeguridadModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <Association Name="ElementPermission">
+          <End Type="SeguridadModel.Element" Role="Element" Multiplicity="*" />
+          <End Type="SeguridadModel.Permission" Role="Permission" Multiplicity="*" />
+        </Association>
+        <Association Name="ElementRole">
+          <End Type="SeguridadModel.Element" Role="Element" Multiplicity="*" />
+          <End Type="SeguridadModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <Association Name="RoleGroup">
+          <End Type="SeguridadModel.Group" Role="Group" Multiplicity="*" />
+          <End Type="SeguridadModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <Association Name="UserDomainGroup">
+          <End Type="SeguridadModel.Group" Role="Group" Multiplicity="*" />
+          <End Type="SeguridadModel.UserDomain" Role="UserDomain" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SeguridadModelStoreContainer" CdmEntityContainer="SeguridadEntities">
+          <EntitySetMapping Name="Aplications">
+            <EntityTypeMapping TypeName="SeguridadModel.Aplication">
+              <MappingFragment StoreEntitySet="Aplications">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="SeguridadModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="SeguridadModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="SeguridadModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elements">
+            <EntityTypeMapping TypeName="SeguridadModel.Element">
+              <MappingFragment StoreEntitySet="Elements">
+                <ScalarProperty Name="Aplications_Id" ColumnName="Aplications_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="SeguridadModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Aplication_Id" ColumnName="Aplication_Id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="SeguridadModel.Permission">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SeguridadModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Aplications_Id" ColumnName="Aplications_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDomains">
+            <EntityTypeMapping TypeName="SeguridadModel.UserDomain">
+              <MappingFragment StoreEntitySet="UserDomains">
+                <ScalarProperty Name="IsUserAd" ColumnName="IsUserAd" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="SeguridadModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ElementPermission" TypeName="SeguridadModel.ElementPermission" StoreEntitySet="ElementPermission">
+            <EndProperty Name="Permission">
+              <ScalarProperty Name="Id" ColumnName="Permissions_Id" />
+            </EndProperty>
+            <EndProperty Name="Element">
+              <ScalarProperty Name="Id" ColumnName="Element_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ElementRole" TypeName="SeguridadModel.ElementRole" StoreEntitySet="ElementRole">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="Roles_Id" />
+            </EndProperty>
+            <EndProperty Name="Element">
+              <ScalarProperty Name="Id" ColumnName="Element_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="RoleGroup" TypeName="SeguridadModel.RoleGroup" StoreEntitySet="RoleGroup">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="Roles_Id" />
+            </EndProperty>
+            <EndProperty Name="Group">
+              <ScalarProperty Name="Id" ColumnName="Groups_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserDomainGroup" TypeName="SeguridadModel.UserDomainGroup" StoreEntitySet="UserDomainGroup">
+            <EndProperty Name="UserDomain">
+              <ScalarProperty Name="Id" ColumnName="UserDomains_Id" />
+            </EndProperty>
+            <EndProperty Name="Group">
+              <ScalarProperty Name="Id" ColumnName="Groups_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

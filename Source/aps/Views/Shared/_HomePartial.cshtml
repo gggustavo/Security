@@ -1,0 +1,98 @@
+﻿<link href="~/Content/metro.css" rel="stylesheet" />
+
+@if (Request.IsAuthenticated)
+{
+    <div class="container">
+        <div class="row">
+
+            <br />
+            <div class="bs-component">
+                <ul class="breadcrumb">
+                    <li class="active"><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                </ul>
+            </div>
+           <br />
+        </div>
+    </div>
+
+    <div class="row">
+        <a href="~/Aplication">
+            <div class="col-sm-4">
+                <div class="tile purple">
+                    <h3 class="title"><span class="glyphicon glyphicon-th-large"></span> Aplicaciones</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Administrar Aplicaciones</p>*@
+                    
+                </div>
+            </div>
+        </a>
+        <a href="~/Group">
+            <div class="col-sm-4">
+                <div class="tile LightPurple">
+                    <h3 class="title"><span class="glyphicon glyphicon-globe"></span> Grupos</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Administrar Grupos</p>*@
+                </div>
+            </div>
+        </a>
+        <a href="~/User">
+            <div class="col-sm-4">
+                <div class="tile blue">
+                    <h3 class="title"><span class="glyphicon glyphicon-user"></span> Usuarios</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Administrar Usuarios</p>*@
+                </div>
+            </div>
+        </a>
+        
+        
+    </div>
+    <div class="row">
+        <a href="~/Element">
+            <div class="col-sm-4">
+                <div class="tile orange">
+                    <h3 class="title"><span class="glyphicon glyphicon-cog"></span> Elementos</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Administrar Elementos</p>*@
+                </div>
+            </div>
+
+        </a>
+        <a href="~/Role">
+            <div class="col-sm-4">
+                <div class="tile red">
+                    <h3 class="title"><span class="glyphicon glyphicon-list"></span> Roles</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Administrar Roles</p>*@
+                </div>
+            </div>
+        </a>
+        <a href="~/Permission">
+            <div class="col-sm-4">
+                <div class="tile green">
+                    <h3 class="title"><span class="glyphicon glyphicon-ok"></span> Permisos</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Administrar Permisos</p>*@
+                </div>
+            </div>
+        </a>        
+    </div>
+    <div class="row">
+        <a href="~/Home/Faq">
+            <div class="col-sm-4">
+                <div class="tile white">
+                    <h3 class="title"><span class="glyphicon glyphicon-bookmark"></span> FAQ</h3>
+                    <p>&nbsp;</p>
+                    @*<p>Preguntas Frecuentes</p>*@
+                </div>
+            </div>
+        </a>
+    </div>
+
+}
+else
+{
+    Response.Redirect("~/Account/Login");
+}
+
+

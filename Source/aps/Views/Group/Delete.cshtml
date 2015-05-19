@@ -1,0 +1,50 @@
+﻿@model Model.Group
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="~/Group"><span class="glyphicon glyphicon-th-large"></span> Grupos</a></li>
+        <li class="active">Borrar</li>
+    </ul>
+</div>
+
+@if (ViewBag.UserExist != null)
+{
+    <div class="bb-alert alert alert-info">@ViewBag.UserExist</div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="col-md-6">
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name, new { @class = "form-control" })
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="col-md-2 text-right col-md-offset-10">
+            @if (ViewBag.UserExist == null)
+            {
+                <input type="submit" value="Borrar" class="btn btn-danger" />
+            }            
+            <a class="btn btn-warning" href="@Url.Action("Index")">Cancelar</a>
+        </div>
+        <div class="row"></div>
+    </div>
+}

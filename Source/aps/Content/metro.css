@@ -1,0 +1,109 @@
+﻿
+p, span, a, ul, li, button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+strong {
+    font-weight: 600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5em;
+    font-weight: 300;
+}
+
+
+strong {
+    font-weight: 400;
+}
+
+.tile {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+    .tile .title {
+        margin-top: 0px;
+    }
+
+    .tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green, .tile.white, .tile.LightPurple {
+        color: #fff;
+    }
+
+    .tile.LightPurple {
+        background: #9f00a7;
+        opacity: 0.8;
+    }
+
+        .tile.LightPurple:hover {
+            background: #85058b;
+            cursor: pointer;
+        }
+
+    .tile.purple {
+        background: #5133ab;
+        opacity: 0.8;
+    }
+
+        .tile.purple:hover {
+            background: #3e2784;
+            cursor: pointer;
+        }
+
+    .tile.red {
+        background: #ac193d;
+        opacity: 0.8;
+    }
+
+        .tile.red:hover {
+            background: #7f132d;
+            cursor: pointer;
+        }
+
+    .tile.green {
+        background: #00a600;
+        opacity: 0.8;
+    }
+
+        .tile.green:hover {
+            background: #007300;
+            cursor: pointer;
+        }
+
+    .tile.blue {
+        background: #2672ec;
+        cursor: pointer;
+    }
+
+        .tile.blue:hover {
+            background: #125acd;
+            cursor: pointer;
+        }
+
+    .tile.orange {
+        background: #dc572e;
+        opacity: 0.8;
+    }
+
+        .tile.orange:hover {
+            background: #b8431f;
+            cursor: pointer;
+        }
+
+    .tile.white {
+        background: #19dbdb;
+        opacity: 0.8;
+    }
+
+        .tile.white:hover {
+            background: #12c2c2;
+            cursor: pointer;
+        }

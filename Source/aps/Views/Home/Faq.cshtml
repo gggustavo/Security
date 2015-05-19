@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "FAQ";
+}
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var navItems = $('.admin-menu li > a');
+            var navListItems = $('.admin-menu li');
+            var allWells = $('.admin-content');
+            var allWellsExceptFirst = $('.admin-content:not(:first)');
+
+            allWellsExceptFirst.hide();
+            navItems.click(function (e) {
+                e.preventDefault();
+                navListItems.removeClass('active');
+                $(this).closest('li').addClass('active');
+
+                allWells.hide();
+                var target = $(this).attr('data-target-id');
+                $('#' + target).show();
+            });
+        });
+    </script>
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li class="active"><span class="glyphicon glyphicon-bookmark"></span> FAQ</li>
+    </ul>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked admin-menu">
+            <li class="active"><a href="#" data-target-id="home"><i class="fa fa-home fa-fw"></i><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="#" data-target-id="ingreso"><i class="fa fa-list-alt fa-fw"></i><span class="glyphicon glyphicon-log-in"></span> Ingreso a MSA</a></li>
+            <li><a href="#" data-target-id="tecnologias"><i class="fa fa-list-alt fa-fw"></i><span class="glyphicon glyphicon-check"></span> Tecnologías</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8 well admin-content" id="home">
+        <span class="glyphicon glyphicon-home"></span> Modulo de Seguridad Administrado
+        <hr />
+        Desde el menu principal se podran administrar aquellas aplicaciones desarrolladas con tecnologías Microsoft. A su vez adminstrar usuarios
+        para dar accesos a través de los distintos roles con sus objetos de autorizacción según los permisos seleccionados.<br /><br />
+        <img src="~/Image/menu.png" class="img-thumbnail" />
+    </div>
+    <div class="col-md-8 well admin-content" id="ingreso">
+        <span class="glyphicon glyphicon-log-in"></span> Ingreso al módulo de seguridad
+        <hr />
+        Desde la pantalla de login, podran autenticarse con un usuario y una password válida que dara acceso a la administración de la seguridad de las distintas aplicaciones existentes.
+        <br /><br />
+        <img src="~/Image/ingreso.png" class="img-thumbnail" />
+    </div>
+
+    <div class="col-md-8 well admin-content" id="tecnologias">
+        <span class="glyphicon glyphicon-check"></span> Tecnologías utilizadas
+        <hr /> 
+        <div class="row">
+           <div class="col-md-5">
+               <span class="glyphicon glyphicon-ok"></span> Microsoft Visual Studio Community 2013<br />
+               <span class="glyphicon glyphicon-ok"></span> Microsoft .NET Framework Version 4.5.51641 <br />
+               <span class="glyphicon glyphicon-ok"></span> Microsoft Team Explorer for Visual Studio 2013 <br />
+               <span class="glyphicon glyphicon-ok"></span> Microsoft Visual C# 2013 <br />
+               <span class="glyphicon glyphicon-ok"></span> ASP.NET MVC 5 <br />
+               <span class="glyphicon glyphicon-ok"></span> Bootstrap v3.0.0 <br />
+               <span class="glyphicon glyphicon-ok"></span> Bootstrap Duallistbox - v3.0.1 <br />
+               <span class="glyphicon glyphicon-ok"></span> HTML5 <br />
+               <span class="glyphicon glyphicon-ok"></span> Razor <br />
+               <span class="glyphicon glyphicon-ok"></span> Javascript and Ajax <br />
+               <span class="glyphicon glyphicon-ok"></span> ASP.NET Identity <br />
+               <span class="glyphicon glyphicon-ok"></span> EntityFramework.6.1.1  <br />
+               <span class="glyphicon glyphicon-ok"></span> ASP.NET Web API <br />
+               <span class="glyphicon glyphicon-ok"></span> SQL SERVER 2012 <br />
+           </div>
+            <div class="col-md-7">
+                <br />
+                <img src="~/Image/visual-studio-net-2012-net-framework-4_5.jpg" class="img-thumbnail" />
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br />

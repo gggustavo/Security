@@ -1,0 +1,31 @@
+﻿@using MSA.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Administrar cuenta";
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li class="active">Administrar</li>
+    </ul>
+</div>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.HasLocalPassword)
+        {
+            @Html.Partial("_ChangePasswordPartial")
+        }
+        else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

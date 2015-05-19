@@ -1,0 +1,42 @@
+﻿@model Model.Role
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="~/Role"><span class="glyphicon glyphicon-list"></span> Roles</a></li>
+        <li class="active">Borrar</li>
+    </ul>
+</div>
+
+<div>
+    @if (ViewBag.UserAsociation != null)
+    {
+        <div class="bb-alert alert alert-info">@ViewBag.UserAsociation</div>
+    }
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name, new { @class = "form-control" })
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()        
+        <div class="row">
+            <div class="col-md-2 text-right col-md-offset-10">
+                <input type="submit" value="Aceptar" class="btn btn-danger" />
+                <a class="btn btn-warning" href="@Url.Action("Index")">Cancelar</a>
+            </div>
+        </div>
+    }
+</div>

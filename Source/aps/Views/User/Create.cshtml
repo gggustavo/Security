@@ -1,0 +1,154 @@
+﻿@model Model.UserDomain
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('select[name="duallistbox"]').bootstrapDualListbox();          
+
+            $("#userad").change(function () {
+                if (this.checked) {
+                    $("#labelpassword").hide();
+                    $("#password").hide();
+                }
+                else {
+                    $("#labelpassword").show();
+                    $("#password").show();
+                }
+            });
+
+            $('#Aplications_Id').change(function () {
+                $.ajax({
+                    url: "FilterByIdApp",
+                    type: 'GET',
+                    data: { idApp: $("#Aplications_Id").val() },
+                    datatype: 'json',
+                    success: function (data) {
+                        var items = '';
+                        $('select[name="duallistbox"] option').remove();
+                        $.each(data, function (i, proceso) {
+                            $('select[name="duallistbox"]').append("<option value='" + proceso.Value + "'>" + proceso.Text + "</option>");
+                        });
+                        $('select[name="duallistbox"]').bootstrapDualListbox('refresh');
+                    },
+                    error: function (error) {
+                        alert(JSON.stringify(error));
+                    }
+                });
+            });
+        });
+
+        
+    </script>
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="~/User"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
+        <li class="active">Crear</li>
+    </ul>
+</div>
+<br />
+
+@if (ViewBag.UserExist != null)
+{
+    <div class="bb-alert alert alert-info">@ViewBag.UserExist</div>
+}
+@if (ViewBag.PasswordUser != null)
+{
+    <div class="bb-alert alert alert-info">@ViewBag.PasswordUser</div>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsUserAd, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.IsUserAd, new { id = "userad" })
+                    <br />
+                    @Html.ValidationMessageFor(model => model.IsUserAd)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-2" , id = "labelpassword" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" , id ="password" })
+                </div>
+            </div>
+
+           
+
+        </div>
+        <div class="col-md-2 text-right col-md-offset-10">
+            <input type="submit" value="Aceptar" class="btn btn-success" />
+            <a class="btn btn-warning" href="@Url.Action("Index")">Cancelar</a>
+        </div>
+        <div class="row"></div>
+        <br />
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Asignación de Grupos                   
+                </h3>
+                
+            </div>
+            <div class="panel-body">
+                <div class="row text-center">
+                    Aplicacion
+                    @Html.DropDownList("Aplications_Id", (SelectList)ViewBag.Aplications, "Seleccionar...", new { @class = "form-control", id = "Aplications_Id" })
+                </div>
+                <br />
+                <div class="form-group col-md-8 col-md-push-2">
+                    <div class="col-md-6 text-center">
+                        <small>Grupos Disponibles</small>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <small>Grupos Activos</small>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-md-push-2">
+                    <select multiple="multiple" size="20" name="duallistbox">
+                        @foreach (var item in ViewBag.Groups)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    </div>
+}
+

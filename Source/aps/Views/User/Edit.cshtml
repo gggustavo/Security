@@ -1,0 +1,122 @@
+﻿@model Model.UserDomain
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.bootstrap-duallistbox.js"></script>
+    <link href="~/Content/bootstrap-duallistbox.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        function FilterByIdApp() {
+            $.ajax({
+                url: '@Url.Action("FilterByIdAppEdit", "User")' + "?idApp=" + $("#Aplications_Id").val() + "&idUsr=" + $("#Id").val(),
+                type: 'GET',
+                data: { idApp: $("#Aplications_Id").val() },
+                datatype: 'json',
+                success: function (data) {
+                    var items = '';
+                    $('select[name="duallistbox"] option').remove();
+                    $.each(data.result1, function (i, proceso) {
+                        $('select[name="duallistbox"]').append("<option value='" + proceso.Value + "'>" + proceso.Text + "</option>");
+                    });
+                    $.each(data.result2, function (i, proceso) {
+                        $('select[name="duallistbox"]').append("<option value='" + proceso.Id + "' selected='selected'>" + proceso.Name + "</option>");
+                    });
+                    $('select[name="duallistbox"]').bootstrapDualListbox('refresh');
+                },
+                error: function (error) {
+                    alert(JSON.stringify(error));
+                }
+            });
+        }
+
+
+
+    $(document).ready(function () {
+        $('select[name="duallistbox"]').bootstrapDualListbox();
+
+        $('#Aplications_Id').change(function () {
+            FilterByIdApp();
+        });
+
+        FilterByIdApp();
+    });
+    </script>
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="~/User"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
+        <li class="active">Editar</li>
+    </ul>
+</div>
+<br />
+
+@if (ViewBag.UserExist != null)
+{
+    <div class="bb-alert alert alert-info">@ViewBag.UserExist</div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                <br />
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+        
+        <div class="col-md-2 text-right col-md-offset-10">
+            <input type="submit" value="Aceptar" class="btn btn-success" />
+            <a class="btn btn-warning" href="@Url.Action("Index")">Cancelar</a>
+        </div>
+        <div class="row"></div>
+
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Asignación de Grupos                    
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row text-center">
+                    Aplicacion
+                    @Html.DropDownList("Aplications_Id", (SelectList)ViewBag.Aplications, "Seleccionar...", new { @class = "form-control", id = "Aplications_Id" })
+                </div>
+                <br />
+
+                <div class="form-group col-md-8 col-md-push-2">
+                    <div class="col-md-6 text-center">
+                        <small>Grupos Disponibles</small>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <small>Grupos Activos</small>
+                    </div>
+                </div>
+                <div class="col-md-8 col-md-push-2">
+                    <select multiple="multiple" size="20" name="duallistbox">
+                        @foreach (var item in ViewBag.GroupsSelect)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+}

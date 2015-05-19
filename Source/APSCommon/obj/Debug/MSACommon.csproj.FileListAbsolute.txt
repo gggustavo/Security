@@ -1,0 +1,7 @@
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\bin\Debug\MSACommon.dll
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\bin\Debug\MSACommon.pdb
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\obj\Debug\MSACommon.csprojResolveAssemblyReference.cache
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\obj\Debug\MSACommon.dll
+C:\Users\Gustavo\Documents\Seguridad\Source\APSCommon\obj\Debug\MSACommon.pdb

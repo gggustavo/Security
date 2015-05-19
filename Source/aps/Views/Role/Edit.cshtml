@@ -1,0 +1,194 @@
+﻿@model Model.Role
+
+@{
+    ViewBag.Title = "Edit";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/multiselect.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#permisos").multiselect({});
+
+            $('#add').click(function () {
+                inHTML = "";
+                $("#SelectBox2 option:selected").each(function () {
+                    var optionVal = $(this).val();
+                    var exists = false;
+                    $('#SelectedItems option').each(function () {
+                        if (this.value == optionVal) {
+                            exists = true;
+                        }
+                    });
+                    idpermission = "";
+                    $("#permisos option:selected").each(function () {
+                        idpermission += "/" + $(this).val();
+                    });
+
+                    if (!exists) {
+                        inHTML += '<option selected value="' + $(this).text() + " - " + idpermission + '">' + $(this).text() + " - " + idpermission + '</option>';
+                    }
+                });
+
+                $("#SelectedItems").append(inHTML);
+
+                $("#SelectBox2 option:selected").remove();
+            });
+
+            $('#remove').click(function () {
+                inHTML = "";
+                $("#SelectedItems option:selected").each(function () {
+                    var optionVal = $(this).val();
+                    var exists = false;
+                    $('#SelectBox2 option').each(function () {
+                        if (this.value == optionVal) {
+                            exists = true;
+                        }
+                    });
+                    if (!exists) {
+                        var value = $(this).text();
+                        var text = value.split("-")[0].toString();
+                        inHTML += '<option value="' + $(this).val() + '">' + text + '</option>';
+                    }
+                });
+                $("#SelectBox2").append(inHTML);
+                $("#SelectedItems option:selected").remove();
+            });
+
+            $("#form").submit(function (e) {
+                $("#SelectedItems option").prop("selected", "selected");
+            });
+
+        });
+
+        $('#Aplications_Id').change(function () {
+            $.ajax({
+                url: '@Url.Action("FilterByIdApp", "Role")',
+                type: 'GET',
+                data: { idApp: $("#Aplications_Id").val() },
+                datatype: 'json',
+                success: function (data) {
+                    var items = '';
+                    $('#SelectBox2 option').remove();
+                    $('#SelectedItems option').remove();
+                    $.each(data, function (i, proceso) {
+                        $('#SelectBox2').append("<option value='" + proceso.Value + "'>" + proceso.Text + "</option>");
+                    });
+                },
+                error: function (error) {
+                    alert(JSON.stringify(error));
+                }
+            });
+
+        })
+    </script>
+}
+
+<br />
+<div class="bs-component">
+    <ul class="breadcrumb">
+        <li><a href="~/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li><a href="~/Role"><span class="glyphicon glyphicon-list"></span> Roles</a></li>
+        <li class="active">Editar</li>
+    </ul>
+</div>
+<br />
+
+@using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { id = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                <br />
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="col-md-2 text-right col-md-offset-10">
+            <input type="submit" value="Aceptar" class="btn btn-success" />
+            <a class="btn btn-warning" href="@Url.Action("Index")">Cancelar</a>
+        </div>
+        <div class="row"></div>
+
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Asignación de Elementos
+                </h3>
+            </div>
+            <div class="panel-body">
+                <br>
+                <div class="form-group">
+                    <div class="col-md-2 text-right"><p>Aplicación</p></div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("Aplications_Id", (SelectList)ViewBag.Aplications, null, new { @class = "form-control", id = "Aplications_Id" })
+                        <code>Si cambia la aplicación los elementos activos se perderan.</code>
+                    </div>
+                    <div class="col-md-2 text-right"><p>Permisos</p></div>
+                    <div class="col-md-4">
+                        <select class="select2" id="permisos" style="width: 400px;" multiple="multiple">
+                            <optgroup label="Permisos">
+                                @foreach (var item in ViewBag.Permission)
+                                {
+                                    <option value="@item.Value">@item.Value - @item.Text</option>
+                                }
+                            </optgroup>
+
+                        </select>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+
+                    <div class="col-md-5">
+                        <small><p class="text-center">Elementos Disponibles</p></small>
+                        <div class="text-right">
+                            @if (ViewBag.Object == null)
+                            {
+                                @Html.ListBox("Disponibles", new SelectList("", "Id", "Name"), new { @class = "form-control", @id = "SelectBox2" })
+                            }
+                            else
+                            {
+                                @Html.ListBox("Disponibles", new SelectList(ViewBag.Object, "Value", "Text"), new { @class = "form-control", @id = "SelectBox2" })
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        <br /><br /><br />
+                        <input type="button" value=">>" id="add" class="btn btn-success" />
+                        <br /><br />
+                        <input type="button" value="<<" id="remove" class="btn btn-danger" />
+                    </div>
+
+                    <div class="col-md-5">
+                        <small><p>Elementos Activos</p></small>
+                        @if (ViewBag.ObjectSelect == null)
+                        {
+                            @Html.ListBox("Activos", new SelectList("", "Value", "Value"), new { @class = "form-control", @id = "SelectedItems" })
+                        }
+                        else
+                        {
+                            @Html.ListBox("Activos", new SelectList(ViewBag.ObjectSelect, "Text", "Text"), new { @class = "form-control", @id = "SelectedItems" })
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+    </div>
+}
